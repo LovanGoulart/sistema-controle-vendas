@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Relatórios | Controle de Vendas{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-chart-bar"></i> Relatórios e Analytics</h1>
+</div>
+
+<div class="relatorios-tabs">
+    <button class="tab-btn active" onclick="mostrarTab('clientes')">
+        <i class="fas fa-users"></i> Lucratividade por Cliente
+    </button>
+    <button class="tab-btn" onclick="mostrarTab('produtos')">
+        <i class="fas fa-box"></i> Lucratividade por Produto
+    </button>
+    <button class="tab-btn" onclick="mostrarTab('periodo')">
+        <i class="fas fa-calendar"></i> Vendas por Período
+    </button>
+</div>
+
+<!-- Tab Clientes -->
+<div id="tabClientes" class="tab-content active">
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Cidade</th>
+                    <th>Nº Vendas</th>
+                    <th>Total Gasto</th>
+                    <th>Lucro Gerado</th>
+                    <th>Ticket Médio</th>
+                </tr>
+            </thead>
+            <tbody id="corpoRelatorioClientes">
+                <tr><td colspan="6" class="loading-cell">Carregando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Tab Produtos -->
+<div id="tabProdutos" class="tab-content">
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Categoria</th>
+                    <th>Custo</th>
+                    <th>Venda</th>
+                    <th>Margem</th>
+                    <th>Qtd Vendida</th>
+                    <th>Lucro Total</th>
+                </tr>
+            </thead>
+            <tbody id="corpoRelatorioProdutos">
+                <tr><td colspan="7" class="loading-cell">Carregando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Tab Período -->
+<div id="tabPeriodo" class="tab-content">
+    <div class="periodo-filter">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Data Início</label>
+                <input type="date" id="dataInicio">
+            </div>
+            <div class="form-group">
+                <label>Data Fim</label>
+                <input type="date" id="dataFim">
+            </div>
+            <button class="btn-primary" onclick="gerarRelatorioPeriodo()">
+                <i class="fas fa-search"></i> Gerar
+            </button>
+        </div>
+    </div>
+    <div id="resultadoPeriodo" class="periodo-resultado">
+        <div class="empty-state">
+            <i class="fas fa-calendar-alt"></i>
+            <p>Selecione um período para gerar o relatório</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/relatorios.js') }}"></script>
+{% endblock %}

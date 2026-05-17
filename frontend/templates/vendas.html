@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Nova Venda | Controle de Vendas{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-shopping-cart"></i> Nova Venda</h1>
+</div>
+
+<div class="venda-container">
+    <!-- Cliente -->
+    <div class="venda-section">
+        <h3><i class="fas fa-user"></i> Cliente</h3>
+        <div class="cliente-selector">
+            <select id="selectCliente" required>
+                <option value="">Selecione um cliente...</option>
+            </select>
+            <button class="btn-secondary" onclick="abrirModalClienteRapido()">
+                <i class="fas fa-plus"></i> Novo
+            </button>
+        </div>
+    </div>
+
+    <!-- Produtos -->
+    <div class="venda-section">
+        <h3><i class="fas fa-box"></i> Produtos</h3>
+        <div class="produto-selector">
+            <select id="selectProduto">
+                <option value="">Selecione um produto...</option>
+            </select>
+            <input type="number" id="qtdProduto" min="1" value="1" placeholder="Qtd">
+            <button class="btn-primary" onclick="adicionarItem()">
+                <i class="fas fa-plus"></i> Adicionar
+            </button>
+        </div>
+
+        <div class="itens-venda" id="itensVenda">
+            <div class="empty-items">
+                <i class="fas fa-shopping-basket"></i>
+                <p>Nenhum item adicionado</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagamento -->
+    <div class="venda-section">
+        <h3><i class="fas fa-credit-card"></i> Pagamento</h3>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Forma de Pagamento</label>
+                <select id="formaPagamento">
+                    <option value="dinheiro">Dinheiro</option>
+                    <option value="cartao_credito">Cartão de Crédito</option>
+                    <option value="cartao_debito">Cartão de Débito</option>
+                    <option value="pix">PIX</option>
+                    <option value="boleto">Boleto</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Observações</label>
+                <input type="text" id="observacoesVenda" placeholder="Observações opcionais">
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumo -->
+    <div class="venda-resumo">
+        <div class="resumo-linha">
+            <span>Subtotal:</span>
+            <span id="subtotalVenda">R$ 0,00</span>
+        </div>
+        <div class="resumo-linha">
+            <span>Lucro Estimado:</span>
+            <span id="lucroVenda" class="text-success">R$ 0,00</span>
+        </div>
+        <div class="resumo-total">
+            <span>Total:</span>
+            <span id="totalVenda">R$ 0,00</span>
+        </div>
+        <button class="btn-success btn-finalizar" onclick="finalizarVenda()">
+            <i class="fas fa-check-circle"></i> Finalizar Venda
+        </button>
+    </div>
+</div>
+
+<!-- Modal Cliente Rápido -->
+<div id="modalClienteRapido" class="modal">
+    <div class="modal-content modal-small">
+        <div class="modal-header">
+            <h3><i class="fas fa-user-plus"></i> Novo Cliente Rápido</h3>
+            <button class="modal-close" onclick="fecharModalClienteRapido()"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="formClienteRapido" class="modal-form">
+            <div class="form-group">
+                <label>Nome *</label>
+                <input type="text" id="clienteRapidoNome" required>
+            </div>
+            <div class="form-group">
+                <label>Telefone</label>
+                <input type="text" id="clienteRapidoTelefone">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="fecharModalClienteRapido()">Cancelar</button>
+                <button type="submit" class="btn-primary">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/vendas.js') }}"></script>
+{% endblock %}
